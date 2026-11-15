@@ -1,0 +1,46 @@
+---
+- name: Install Apache on Red Hat
+  ansible.builtin.yum:
+    name: "{{ apache_package_redhat }}"
+    state: present
+  when: ansible_distribution == "RedHat"
+  tags:
+    - install
+
+- name: Install Apache on Ubuntu
+  ansible.builtin.apt:
+    name: "{{ apache_package_ubuntu }}"
+    state: present
+    update_cache: yes
+  when: ansible_distribution == "Ubuntu"
+  tags:
+    - install
+
+- name: Start Apache on Red Hat
+  ansible.builtin.service:
+    name: "{{ apache_service_redhat }}"
+    state: "{{ apache_service_state }}"
+    enabled: "{{ apache_service_enabled }}"
+  when: ansible_distribution == "RedHat"
+  tags:
+    - configure
+
+- name: Start Apache on Ubuntu
+  ansible.builtin.service:
+    name: "{{ apache_service_ubuntu }}"
+    state: "{{ apache_service_state }}"
+    enabled: "{{ apache_service_enabled }}"
+  when: ansible_distribution == "Ubuntu"
+  tags:
+    - configure
+
+- name: Deploy custom HTML page
+  ansible.builtin.template:
+    src: index.html.j2
+    dest: "{{ apache_document_root }}/{{ apache_index_file }}"
+    mode: '0644'
+  notify:
+    - Restart Apache on Red Hat
+    - Restart Apache on Ubuntu
+  tags:
+    - deploy

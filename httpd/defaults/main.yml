@@ -1,0 +1,21 @@
+---
+# Apache package and service configuration
+apache_package_redhat: httpd
+apache_package_ubuntu: apache2
+
+apache_service_redhat: httpd
+apache_service_ubuntu: apache2
+
+# Apache configuration
+apache_document_root: /var/www/html
+apache_index_file: index.html
+
+# Service configuration
+apache_service_state: started
+apache_service_enabled: true
+
+# Deployment configuration
+apache_deployment_message: "Welcome! Apache deployed using Ansible."
+
+apache_app_name: "NOVA Web Server"
+apache_environment: "Development"

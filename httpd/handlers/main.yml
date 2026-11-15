@@ -1,0 +1,12 @@
+---
+- name: Restart Apache on Red Hat
+  ansible.builtin.service:
+    name: "{{ apache_service_redhat }}"
+    state: restarted
+  when: ansible_distribution == "RedHat"
+
+- name: Restart Apache on Ubuntu
+  ansible.builtin.service:
+    name: "{{ apache_service_ubuntu }}"
+    state: restarted
+  when: ansible_distribution == "Ubuntu"

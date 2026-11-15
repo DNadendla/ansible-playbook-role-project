@@ -1,0 +1,7 @@
+---
+- name: Configure Apache HTTP server
+  hosts: all
+  become: true
+
+  roles:
+    - httpd
